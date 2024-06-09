@@ -1,0 +1,52 @@
+// SYNTAX TEST "source.hlil" "function signature"
+00001258  int32_t main(int32_t argc, char** argv, char** envp)
+// <-------- constant.numeric
+//        ^^^^^^^ entity.name.type
+//                ^^^^ entity.name.function
+//                     ^^^^^^^ entity.name.type
+//                             ^^^^ variable.parameter
+//                                   ^^^^ entity.name.type
+//                                       ^^ - entity.name.type
+//                                          ^^^^ variable.parameter
+//                                                ^^^^ entity.name.type
+//                                                    ^^ - entity.name.type
+//                                                       ^^^^ variable.parameter
+//                                 ^ - entity.name.type
+//                                                            ^ - entity.name.type
+
+00001264      void* fsbase
+// <-------- constant.numeric
+//            ^^^^ entity.name.type
+//                ^ - entity.name.type
+//                  ^^^^^^ variable.other
+
+0000127d      puts(str: &__art)
+// <-------- constant.numeric
+//            ^^^^ entity.name.function
+//                 ^^^ variable.other
+//                      ^ - variable.parameter
+//                       ^^^^^ variable.other
+
+00001303      while (data != 0)
+// <-------- constant.numeric
+//            ^^^^^ keyword.control
+//                   ^^^^ variable.other
+//                        ^^ keyword.operator
+//                           ^ constant.numeric
+
+00001293          int64_t var_18 = 0
+// <-------- constant.numeric
+//                ^^^^ entity.name.type
+//                        ^^^^^^ variable.other
+//                                 ^ constant.numeric
+
+0000130e      *(fsbase + 0x28)
+// <-------- constant.numeric
+//              ^^^^^^ variable.other
+//                     ^ keyword.operator
+//                       ^^^^ constant.numeric
+
+0000131f          return 0
+// <-------- constant.numeric
+//                ^^^^^^ keyword.control
+//                       ^ constant.numeric

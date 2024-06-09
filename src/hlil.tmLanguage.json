@@ -1,0 +1,248 @@
+{  
+    "name": "hlil",
+    "scopeName": "source.hlil",
+     "patterns": [
+        {
+            "include": "#statements"
+        },
+        {
+            "include": "#expression"
+        }
+    ],
+    "repository": {
+        "statements": {
+            "match": "^([0-9a-fA-F]+)\\s+(.*)",
+            "captures": {
+                "1": {
+                    "name": "constant.numeric"
+                },
+                "2": {
+                    "patterns": [
+                        {
+                            "include": "#keyword"
+                        },
+                        {
+                            "include": "#function_signature"
+                        },
+                        {
+                            "include": "#declaration"
+                        },
+                        {
+                            "include": "#call"
+                        },
+                        {
+                            "include": "#expression"
+                        }
+                    ]
+                }
+            }
+
+        },
+        "keyword": {
+            "patterns": [
+                {
+                    "match": "noreturn",
+                    "name": "keyword.control"
+                },
+                {
+                    "match": "return\\s+([0-9]+)",
+                    "name": "keyword.control",
+                    "captures": {
+                        "1": {
+                            "patterns": [
+                                {"include": "#expression"}
+                            ]
+                            
+                        }
+                    }
+                },
+                {
+                    "match": "(while) \\((.*?)\\)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.control"
+                        },
+                        "2": {
+                            "patterns": [
+                                {
+                                    "include": "#expression"
+                                }
+                            ]
+                        }
+                    }
+                    
+                }
+            ]
+
+        },
+        "function_signature": { 
+           "match": "([\\w]+)\\**\\s+(\\w+)\\((.+)\\)",
+           "captures": {
+                "1": {
+                    "name": "entity.name.type"
+                },
+                "2": {
+                    "name": "entity.name.function"
+                },
+                "3": {
+                    "name": "entity.name.parameter",
+                    "patterns": [
+                        {
+                            "match": "([\\w]+)\\**\\s+",
+                            "captures": {
+                                "1": {
+                                    "name": "entity.name.type"
+                                }
+                            }
+                            
+                        },
+                        {
+                            "match": "(\\w+)[,\\)]?",
+                            "captures": {
+                                "1": {
+                                    "name": "variable.parameter"
+                                }
+                            }
+                            
+                        }
+                    ]
+                }
+           }
+        },
+        "declaration": { 
+            "match": "([\\w_]+?)\\*?\\s+([\\w_]+)(?:\\s+[=]+\\s+(.*))?",
+            "captures": {
+                 "1": {
+                     "name": "entity.name.type"
+                 },
+                 "2": {
+                     "name": "variable.other"
+                 },
+                 "3": {
+                    "patterns": [
+                        {"include": "#expression"}
+                    ]
+                }
+            }
+         },
+        "address": {
+            "name": "constant.numeric",
+            "match": "^[0-9a-fA-F]+"
+        },
+        "numeric": {
+            "patterns": [
+                {
+                    "name": "constant.numeric",
+                    "match": "0[xX][0-9a-fA-F]+"
+                },
+                {
+                    "name": "constant.numeric",
+                    "match": "[0-9]+"
+                }
+            ]
+            
+        },
+        "call": {
+            "match": "([\\w_]+)(\\(.*?\\))",
+            "captures": {
+                "1": {
+                    "name": "entity.name.function"
+                },
+                "2": {
+                    "patterns": [
+                        {
+                            "include": "#call_parameter"
+                        }
+                    ]
+                    
+                }
+            }
+        },
+        "expression": {
+            "patterns": [
+                {
+                    "name": "punctuation.definition.string",
+                    "match": "\".*?\""
+                },
+
+                {
+                    "include": "#numeric"
+                },
+                {
+                    "match": "&?([\\w_]+)",
+                    "captures": {
+                        "1": {
+                            "name": "variable.other"
+                        }
+                    }
+                },
+                {
+                    "include": "#unary_op"
+                },
+                {
+                    "include": "#binary_op"
+                }
+            ]
+        },
+        "unary_op": {
+            "patterns": [
+                {
+                    "match": "\\*\\((.*?)\\)",
+                    "captures": {
+                        "1": {
+                            "patterns": [
+                                {
+                                    "include": "#expression"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "binary_op": {
+            "patterns": [
+                {
+                    "match": "(.*)\\s+([+!=]+)\\s+(.*)",
+                    "captures": {
+                        "1": {
+                            "patterns": [
+                                {
+                                    "include": "#expression"
+                                }
+                            ]
+                        },
+                        "2": {
+                            "name": "keyword.operator"
+                        },
+                        "3": {
+                            "patterns": [
+                                {
+                                    "include": "#expression"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "call_parameter": {
+            "patterns": [
+                {
+                    "match": "\\((?:([\\w_]+?:)?\\s*(.*)[,\\)\\Z])+",
+                    "captures": {
+                        "1": {
+                            "name": "variable.other"
+                        },
+                        "2": {
+                            "patterns": [
+                                {"include": "#expression"}
+                            ]
+                            
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}   
