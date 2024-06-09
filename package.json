@@ -2,7 +2,7 @@
   "name": "tm_hlil",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "src/index.mjs",
   "scripts": {
     "test": "./tests/run.sh"
   },
